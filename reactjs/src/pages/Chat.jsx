@@ -18,7 +18,15 @@ function Chat({ username }) {
         } else {
             return navigate('/');
         }
-    }, [username, navigate]);
+
+        socket.on('send-message', (data) => {
+            setMessages([...messages, data]);
+        });
+
+        return () => {
+            socket.off('send-message');
+        };
+    }, [username, navigate, messages, setMessages]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -38,6 +46,7 @@ function Chat({ username }) {
                     date: currentDate,
                 },
             ]);
+            document.getElementById('current-message').value = '';
         }
     }
 
@@ -57,6 +66,7 @@ function Chat({ username }) {
                 <input
                     type="text"
                     onChange={(e) => setCurrentMessage(e.target.value)}
+                    id="current-message"
                 />
                 <button type="submit">Send</button>
             </form>
