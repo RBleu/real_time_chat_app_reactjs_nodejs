@@ -40,10 +40,10 @@ function Chat({ username }) {
             setMessages([
                 ...messages,
                 {
-                    id: socket.id,
                     username: username,
                     message: currentMessage,
                     date: currentDate,
+                    isYourMessage: true,
                 },
             ]);
             document.getElementById('current-message').value = '';
@@ -54,15 +54,22 @@ function Chat({ username }) {
         <div>
             <div className="messages-container">
                 {messages.map((m, index) => (
-                    <div key={index} className="message-container">
-                        <div>{m.message}</div>
+                    <div
+                        key={index}
+                        className={
+                            m.isYourMessage
+                                ? 'message-container your-message'
+                                : 'message-container'
+                        }
+                    >
+                        <div className="message-content">{m.message}</div>
                         <div>
                             {m.username} . {m.date}
                         </div>
                     </div>
                 ))}
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="send-message">
                 <input
                     type="text"
                     onChange={(e) => setCurrentMessage(e.target.value)}

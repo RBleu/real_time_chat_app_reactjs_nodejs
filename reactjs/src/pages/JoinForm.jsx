@@ -13,7 +13,13 @@ function JoinForm({ username, setUsername }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" onChange={(e) => setUsername(e.target.value)} />
+            <p>Choose Your Username :</p>
+            <input
+                type="text"
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="false"
+                placeholder="Username"
+            />
             <button type="submit">Join</button>
         </form>
     );

@@ -20,10 +20,10 @@ io.on('connection', socket => {
 
     socket.on('send-message', data => {
         socket.broadcast.emit('send-message', {
-            id: socket.id,
             username: users[socket.id],
             message: data.message,
             date: data.date,
+            isYourMessage: false,
         });
     });
 });
