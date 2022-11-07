@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import moment from 'moment/moment';
@@ -9,6 +9,7 @@ const socket = io(server);
 function Chat({ username }) {
     const [currentMessage, setCurrentMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const messageRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ function Chat({ username }) {
                     isYourMessage: true,
                 },
             ]);
-            document.getElementById('current-message').value = '';
+            messageRef.current.value = '';
         }
     }
 
@@ -74,6 +75,7 @@ function Chat({ username }) {
                     type="text"
                     onChange={(e) => setCurrentMessage(e.target.value)}
                     id="current-message"
+                    ref={messageRef}
                 />
                 <button type="submit">Send</button>
             </form>
